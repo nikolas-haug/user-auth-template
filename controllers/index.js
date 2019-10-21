@@ -1,6 +1,8 @@
 const User = require('../models/user');
+const passport = require('passport');
 
 module.exports = {
+    // Register the new user
     async postRegister(req, res, next) {
         const newUser = new User({
             username: req.body.username,
@@ -9,5 +11,18 @@ module.exports = {
         });
         await User.register(newUser, req.body.password);
         res.redirect('/');
-    }
+    },
+    // Log the registered user in
+    postLogin(req, res, next) {
+        passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/login'    
+        })(req, res, next);
+    },
+    // Log the user out
+    getLogout(req, res, next) {
+        req.logout();
+        res.redirect('/');
+      }
+
 }
