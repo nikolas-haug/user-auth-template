@@ -7,7 +7,7 @@ const { errorHandler } = require('../middleware/index');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
 // GET /register

@@ -10,6 +10,7 @@ module.exports = {
             image: req.body.image
         });
         await User.register(newUser, req.body.password);
+        req.session.success = 'New User Created Successfully!';
         res.redirect('/');
     },
     // Log the registered user in
