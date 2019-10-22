@@ -18,3 +18,14 @@
 
             <h1><%= title %></h1>
                 <p>Welcome to <%= title %></p>
+
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                    <% if(!currentUser) { %>
+                        <li><a href="/register">Register</a></li>
+                        <li><a href="/login">Login</a></li>
+                    <% } else { %>
+                        <li><a href="/logout">Logout</a></li>
+                        <li>Welcome, <%= currentUser.username %></li>
+                    <% } %>
+                    </ul>

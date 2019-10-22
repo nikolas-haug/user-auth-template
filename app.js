@@ -57,6 +57,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next) {
   // default title page
   res.locals.title = 'Auth Template';
+  // current user logged in if they exist
+  res.locals.currentUser = req.user;
   // Flash messages
   res.locals.success = req.session.success || '';
   delete req.session.success;
