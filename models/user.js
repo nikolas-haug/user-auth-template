@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 // Basic user profile with: email, password, and profile-image
 
 const UserSchema = new Schema({
-    email: String,
+    email: { type: String, unique: true, required: true},
     image: String
 });
 

@@ -14,7 +14,7 @@ const indexRouter = require('./routes/index');
 const app = express();
 
 // Connect to the mongodb Database ======================
-mongoose.connect('mongodb://localhost:27017/auth-template', {
+mongoose.connect('mongodb://localhost:27017/auth-template2', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

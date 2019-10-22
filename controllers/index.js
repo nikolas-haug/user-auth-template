@@ -5,21 +5,26 @@ module.exports = {
 
     // GET /register - Show the sign up page
     getRegister(req, res, next) {
-        res.render('register');
+        res.render('register', { username: '', email: '' });
     },
     // POST /register - Register the new user
     async postRegister(req, res, next) {
-        const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            image: req.body.image
-        });
-        let user = await User.register(newUser, req.body.password);
-        req.login(user, function(err) {
-            if(err) return next(err);
-            req.session.success = `New user, ${user.username} was created successfully!`;
-        });
-        res.redirect('/');
+        try {
+            const user = await User.register(new User(req.body), req.body.password);
+            req.login(user, function(err) {
+                if(err) return next(err);
+                req.session.success = `New user, ${user.username} was created successfully!`;
+                res.redirect('/');
+            });
+        } catch(err) {
+            const { username, email } = req.body;
+            let error = err.message;
+            if(error.includes('duplicate') && error.includes('index: email_1 dup key')) {
+                error = 'A user with the given email is already registered';
+            } 
+            res.render('register', { username, email, error });
+        }
+        
     },
     // GET /login - Show the login page
     getLogin(req, res, next) {
