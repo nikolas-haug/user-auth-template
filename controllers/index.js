@@ -5,6 +5,7 @@ module.exports = {
 
     // GET /register - Show the sign up page
     getRegister(req, res, next) {
+        if(req.isAuthenticated()) return res.redirect('/');
         res.render('register', { username: '', email: '' });
     },
     // POST /register - Register the new user
@@ -28,6 +29,7 @@ module.exports = {
     },
     // GET /login - Show the login page
     getLogin(req, res, next) {
+        if(req.isAuthenticated()) return res.redirect('/');
         res.render('login');
     },
     // POST /login - Log the registered user in
@@ -39,13 +41,14 @@ module.exports = {
             if(err) return next(err);
             req.session.success = `Welcome back, ${username}!`;
             const redirectUrl = req.session.redirectTo || '/';
-            delete req.session.redirectUrl;
+            delete req.session.redirectTo;
             res.redirect(redirectUrl);
         });
     },
     // GET /logout - Log the user out
     getLogout(req, res, next) {
         req.logout();
+        req.session.success = 'Logout successful!';
         res.redirect('/');
       }
 

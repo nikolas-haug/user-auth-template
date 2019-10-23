@@ -32,7 +32,7 @@ router.get('/logout', getLogout);
 
 // GET /profile
 router.get('/profile', isLoggedIn, (req, res, next) => {
-  res.send('GET /profile');
+  res.render('profile');
 });
 
 // PUT /profile/:user_id
