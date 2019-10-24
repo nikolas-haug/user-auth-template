@@ -50,6 +50,10 @@ module.exports = {
         req.logout();
         req.session.success = 'Logout successful!';
         res.redirect('/');
+    },
+    // GET /profile - show the user's profile page
+    getProfile(req, res, next) {
+        res.render('profile');
       }
 
 }
