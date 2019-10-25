@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const passport = require('passport');
+const util = require('util'); 
 
 module.exports = {
 
@@ -54,6 +55,21 @@ module.exports = {
     // GET /profile - show the user's profile page
     getProfile(req, res, next) {
         res.render('profile');
-      }
+    },
+    // Update profile
+    async updateProfile(req, res, next) {
+        const { 
+            username,
+            email
+        } = req.body;
+        const { user } = res.locals;
+        if(username) user.username = username;
+        if(email) user.email = email;
+        await user.save();
+        const login = util.promisify(req.login.bind(req));
+        await login(user);
+        req.session.success = 'Profile successfully updated!';
+        res.redirect('/profile');
+    }
 
 }

@@ -14,10 +14,12 @@ function validatePasswords(message, add, remove) {
 confirmation.addEventListener('input', e => {
     e.preventDefault();
     newPasswordValue = newPassword.value;
-    confirmationValue = confirmationValue.value; 
+    confirmationValue = confirmation.value; 
     if(newPasswordValue !== confirmationValue) {
-
+        validatePasswords('Passwords must match!', 'is-error', 'is-success');
+        submitBtn.setAttribute('disabled', true);
     } else {
-
+        validatePasswords('Passwords match!', 'is-success', 'is-error');
+        submitBtn.removeAttribute('disabled');
     }
 });
