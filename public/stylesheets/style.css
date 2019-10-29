@@ -16,3 +16,9 @@ a {
 .is-error {
   color: red;
 }
+
+/* Profile image */
+.profile-image {
+  width: 100px;
+  border-radius: 50%;
+}
