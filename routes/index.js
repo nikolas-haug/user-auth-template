@@ -8,9 +8,15 @@ const {
   getLogin,
   postLogin, 
   getLogout,
-  getProfile 
+  getProfile,
+  updateProfile 
 } = require('../controllers/index');
-const { asyncErrorHandler, isLoggedIn } = require('../middleware/index');
+const { 
+  asyncErrorHandler, 
+  isLoggedIn,
+  isValidPassword,
+  changePassword 
+} = require('../middleware/index');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -35,10 +41,13 @@ router.get('/logout', getLogout);
 // GET /profile
 router.get('/profile', isLoggedIn, asyncErrorHandler(getProfile));
 
-// PUT /profile/:user_id
-router.put('/profile/:user_id', (req, res, next) => {
-  res.send('GET /profile/:user_id');
-});
+// PUT /profile
+router.put('/profile', 
+    isLoggedIn, 
+    asyncErrorHandler(isValidPassword), 
+    asyncErrorHandler(changePassword), 
+    asyncErrorHandler(updateProfile)
+    );
 
 // GET /forgot-password
 router.get('/forgot', (req, res, next) => {
